@@ -2,50 +2,53 @@ class MinHeap:
     def __init__(self):
         self.heap = []
 
+    def rotate(self, node):
+        left_node = 2 * node
+        right_node = 2 * node + 1
+
+        min_node = node
+        if left_node < len(self.heap) and self.heap[min_node - 1] > self.heap[left_node - 1]:
+            min_node = left_node
+        if right_node < len(self.heap) and self.heap[min_node - 1] > self.heap[right_node - 1]:
+            min_node = right_node
+
+        if min_node != node:
+            self.heap[min_node - 1], self.heap[node - 1] = self.heap[node - 1], self.heap[min_node - 1]
+            self.rotate(min_node)
+
     def push(self, value):
         self.heap.append(value)
-        current_node = len(self.heap)
-        while current_node > 1:
-            parent_node = current_node // 2
-            if self.heap[parent_node-1] > self.heap[current_node-1]:
-                self.heap[parent_node-1], self.heap[current_node-1] = self.heap[current_node-1], self.heap[parent_node-1]
-                current_node = parent_node
+        node = len(self.heap)
+        while node > 1:
+            parent_node = node // 2
+            if self.heap[parent_node-1] > self.heap[node-1]:
+                self.heap[parent_node-1], self.heap[node-1] = self.heap[node-1], self.heap[parent_node-1]
+                node = parent_node
             else:
                 break
         pass
 
     def pop(self):
+        if len(self.heap) == 0:
+            raise IndexError("MinHeap is empty")
+
         top_value = self.heap[0]
-        self.heap[0] = self.heap[len(self.heap)-1]
+
+        self.heap[0] = self.heap[len(self.heap) - 1]
         self.heap.pop()
-        current_node = 1
-        while True:
-            left_child_node = current_node*2
-            right_child_node = current_node*2+1
 
-            left_node_value = self.heap[current_node-1]+1
-            if left_child_node < len(self.heap):
-                left_node_value = self.heap[left_child_node]
-
-            right_node_value = self.heap[current_node-1]+1
-            if right_child_node < len(self.heap):
-                right_node_value = self.heap[right_child_node]
-
-            if min(left_node_value, right_node_value) >= self.heap[current_node-1]:
-                break
-
-            if left_node_value <= right_node_value:
-                self.heap[current_node], self.heap[left_child_node] = self.heap[left_child_node], self[current_node]
-                current_node = left_child_node
-            else:
-                self.heap[current_node], self.heap[right_child_node] = self.heap[right_child_node], self[current_node]
-                current_node = right_child_node
+        if len(self.heap) > 0:
+            self.rotate(1)
 
         return top_value
 
     def heapify(self):
-        # TODO : FILL IN HERE
-        pass
+        for node in range(len(self.heap)//2, -1, -1):
+            self.rotate(node)
+
+    def is_empty(self):
+        return len(self.heap) == 0
+
 
 if __name__ == "__main__":
     min_heap = MinHeap()

@@ -1,10 +1,26 @@
 import heap
 
+
 def dijkstra(graph, start):
+    min_heap = heap.MinHeap()
     distances = {node: float('inf') for node in graph}
-    # TODO : FILL IN HERE
+
+    distances[start] = 0
+    min_heap.push((start, 0))
+
+    while not min_heap.is_empty():
+        top_heap = min_heap.pop()
+        u, distance_u = top_heap
+        if distances[u] != distance_u:
+            continue
+        for v in graph[u]:
+            value_v = distance_u + graph[u][v]
+            if distances[v] > value_v:
+                distances[v] = value_v
+                min_heap.push((v, value_v))
 
     return distances
+
 
 if __name__ == "__main__":
     graph = {}
