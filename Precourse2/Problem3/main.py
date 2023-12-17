@@ -9,7 +9,7 @@ B, H, W = 100, 30, 30
 
 
 def cov_images_base(A, debug=False):
-    '''
+    """
     Calculate covariance matrix of given images
     ===================================================
     Arguments:
@@ -18,7 +18,7 @@ def cov_images_base(A, debug=False):
     Outputs:
         + covs: covariance matrix of A
         + total_mem: memory allocated by numpy
-    '''
+    """
     # Start to trace memory
     tracemalloc.start()
 
@@ -29,20 +29,19 @@ def cov_images_base(A, debug=False):
     covs = []
     norm_A = []
     for a in A:
-      a = a.flatten()
-      mean_a = np.mean(a)
-      mean_a = np.broadcast_to(mean_a, a.shape)
-      norm_a = a - mean_a
-      norm_A.append(norm_a)
+        a = a.flatten()
+        mean_a = np.mean(a)
+        mean_a = np.broadcast_to(mean_a, a.shape)
+        norm_a = a - mean_a
+        norm_A.append(norm_a)
     norm_A = np.array(norm_A)
     covs = np.matmul(norm_A, norm_A.T)
 
     snapshot = tracemalloc.take_snapshot()
     np_domain = np.lib.tracemalloc_domain
-    dom_filter = tracemalloc.DomainFilter(inclusive=use_np_domain,
-                                          domain=np_domain)
+    dom_filter = tracemalloc.DomainFilter(inclusive=use_np_domain, domain=np_domain)
     snapshot = snapshot.filter_traces([dom_filter])
-    top_stats = snapshot.statistics('traceback')
+    top_stats = snapshot.statistics("traceback")
 
     total_mem = 0
     for stat in top_stats:
@@ -61,7 +60,7 @@ def cov_images_base(A, debug=False):
 
 
 def cov_images_optim(A, debug=False):
-    '''
+    """
     Calculate covariance matrix of given images
     ===================================================
     Arguments:
@@ -70,7 +69,7 @@ def cov_images_optim(A, debug=False):
     Outputs:
         + covs: covariance matrix of A
         + total_mem: memory allocated by numpy
-    '''
+    """
     # Start to trace memory
     tracemalloc.start()
 
@@ -78,22 +77,19 @@ def cov_images_optim(A, debug=False):
     # before moving to the next section.
     tracemalloc.clear_traces()
 
-    ### TODO: fill in here ###
-
-    mean_A = np.mean(A, axis=(1, 2), keepdims=True)
-    A -= mean_A
-    N, W, H = A.shape
-    reshape_A = A.reshape((N, W * H), order='F')
-    covs = np.matmul(reshape_A, reshape_A.T)
+    mean_a = np.mean(A, axis=(1, 2), keepdims=True)
+    A -= mean_a
+    n, w, h = A.shape
+    reshape_a = A.reshape((n, w * h), order="F")
+    covs = np.matmul(reshape_a, reshape_a.T)
 
     ##########################
 
     snapshot = tracemalloc.take_snapshot()
     np_domain = np.lib.tracemalloc_domain
-    dom_filter = tracemalloc.DomainFilter(inclusive=use_np_domain,
-                                          domain=np_domain)
+    dom_filter = tracemalloc.DomainFilter(inclusive=use_np_domain, domain=np_domain)
     snapshot = snapshot.filter_traces([dom_filter])
-    top_stats = snapshot.statistics('traceback')
+    top_stats = snapshot.statistics("traceback")
 
     total_mem = 0
     for stat in top_stats:
@@ -110,12 +106,15 @@ def cov_images_optim(A, debug=False):
 
     return covs, total_mem
 
+
 def main():
     debug = False
     A = np.asfortranarray(np.random.rand(B, H, W))
     answer, base_mem = cov_images_base(A, True)
     output, mem = cov_images_optim(A, True)
-    assert np.linalg.norm(answer - output) < 1e-9, f"Wrong Answer, Diff: {np.linalg.norm(answer - output)}"
+    assert (
+        np.linalg.norm(answer - output) < 1e-9
+    ), f"Wrong Answer, Diff: {np.linalg.norm(answer - output)}"
     # assert base_mem * 0.1 > mem, f"Too many memory usage, Base: {base_mem} / You: {mem}"
 
     t = Timer(lambda: cov_images_base(A, False))
@@ -124,10 +123,12 @@ def main():
     t = Timer(lambda: cov_images_optim(A, False))
     inf_time = t.timeit(number=100)
 
-    assert base_inf_time * 0.15 > inf_time, f"Too slow, Base: {base_inf_time} / You: {inf_time}"
+    assert (
+        base_inf_time * 0.15 > inf_time
+    ), f"Too slow, Base: {base_inf_time} / You: {inf_time}"
 
     print("Success!!")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

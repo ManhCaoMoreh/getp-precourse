@@ -1,0 +1,15 @@
+{
+  "name": "getp-precourse",
+  "version": "1.0.0",
+  "description": "- [Precourse2](Precourse2)",
+  "main": "index.js",
+  "dependencies": {
+    "husky": "^8.0.3",
+    "prettier": "^3.1.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

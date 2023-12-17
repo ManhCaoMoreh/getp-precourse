@@ -7,13 +7,22 @@ class MinHeap:
         right_node = 2 * node + 1
 
         min_node = node
-        if left_node < len(self.heap) and self.heap[min_node - 1] > self.heap[left_node - 1]:
+        if (
+            left_node < len(self.heap)
+            and self.heap[min_node - 1] > self.heap[left_node - 1]
+        ):
             min_node = left_node
-        if right_node < len(self.heap) and self.heap[min_node - 1] > self.heap[right_node - 1]:
+        if (
+            right_node < len(self.heap)
+            and self.heap[min_node - 1] > self.heap[right_node - 1]
+        ):
             min_node = right_node
 
         if min_node != node:
-            self.heap[min_node - 1], self.heap[node - 1] = self.heap[node - 1], self.heap[min_node - 1]
+            self.heap[min_node - 1], self.heap[node - 1] = (
+                self.heap[node - 1],
+                self.heap[min_node - 1],
+            )
             self.rotate(min_node)
 
     def push(self, value):
@@ -21,8 +30,11 @@ class MinHeap:
         node = len(self.heap)
         while node > 1:
             parent_node = node // 2
-            if self.heap[parent_node-1] > self.heap[node-1]:
-                self.heap[parent_node-1], self.heap[node-1] = self.heap[node-1], self.heap[parent_node-1]
+            if self.heap[parent_node - 1] > self.heap[node - 1]:
+                self.heap[parent_node - 1], self.heap[node - 1] = (
+                    self.heap[node - 1],
+                    self.heap[parent_node - 1],
+                )
                 node = parent_node
             else:
                 break
@@ -43,7 +55,7 @@ class MinHeap:
         return top_value
 
     def heapify(self):
-        for node in range(len(self.heap)//2, -1, -1):
+        for node in range(len(self.heap) // 2, -1, -1):
             self.rotate(node)
 
     def is_empty(self):
@@ -53,7 +65,7 @@ class MinHeap:
 if __name__ == "__main__":
     min_heap = MinHeap()
 
-    with open('input_heap.txt', 'r') as file:
+    with open("input_heap.txt", "r") as file:
         lines = file.readlines()
         for line in lines:
             value = int(line.strip())

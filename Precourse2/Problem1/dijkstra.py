@@ -3,7 +3,7 @@ import heap
 
 def dijkstra(graph, start):
     min_heap = heap.MinHeap()
-    distances = {node: float('inf') for node in graph}
+    distances = {node: float("inf") for node in graph}
 
     distances[start] = 0
     min_heap.push((start, 0))
@@ -24,7 +24,7 @@ def dijkstra(graph, start):
 
 if __name__ == "__main__":
     graph = {}
-    with open('input_graph.txt', 'r') as file:
+    with open("input_graph.txt", "r") as file:
         lines = file.readlines()
         for line in lines:
             line = line.strip().split()
@@ -33,7 +33,7 @@ if __name__ == "__main__":
                 graph[node1] = {}
             graph[node1][node2] = weight
 
-    start_node = 'A'
+    start_node = "A"
     result = dijkstra(graph, start_node)
     print(f"Start Node: {start_node}")
     print(f"Shortest distances: {result}")
