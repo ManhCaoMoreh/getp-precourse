@@ -3,6 +3,13 @@ class MinHeap:
         self.heap = []
 
     def rotate(self, node):
+        """
+        push a new node to the min heap, its value is value
+        =================================================================================================
+        Arguments:
+            + value: value of the node
+        Outputs:
+        """
         left_node = 2 * node
         right_node = 2 * node + 1
 
@@ -26,6 +33,13 @@ class MinHeap:
             self.rotate(min_node)
 
     def push(self, value):
+        """
+        push a new node to the min heap, its value is value
+        =================================================================================================
+        Arguments:
+            + value: value of the node
+        Outputs:
+        """
         self.heap.append(value)
         node = len(self.heap)
         while node > 1:
@@ -41,6 +55,13 @@ class MinHeap:
         pass
 
     def pop(self):
+        """
+        return the smallest value of the heap and remove it
+        =================================================================================================
+        Arguments:
+        Outputs:
+            + value: the smallest value of the heap
+        """
         if len(self.heap) == 0:
             raise IndexError("MinHeap is empty")
 
@@ -55,10 +76,18 @@ class MinHeap:
         return top_value
 
     def heapify(self):
+        """
+        convert the internal heap array to correct, valid min heap
+        =================================================================================================
+        """
         for node in range(len(self.heap) // 2, -1, -1):
             self.rotate(node)
 
     def is_empty(self):
+        """
+        check whether heap is empty or not
+        =================================================================================================
+        """
         return len(self.heap) == 0
 
 

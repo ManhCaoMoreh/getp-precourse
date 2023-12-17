@@ -2,6 +2,15 @@ import heap
 
 
 def dijkstra(graph, start):
+    """
+    calculate the shortest distances from start using dijkstra algorithm, give the graph
+    =================================================================================================
+    Arguments:
+        + graph: info of the graph (nodes, edges)
+        + start: the start node
+    Outputs:
+        + distances: the shortest distances to all nodes from start
+    """
     min_heap = heap.MinHeap()
     distances = {node: float("inf") for node in graph}
 

@@ -1,4 +1,17 @@
 def build_level_cols(root, level, margin, lefts, rights, level_cols):
+    """
+    Build up the level_col array. level_cols[x] show all the columns of all the nodes in level x
+    =================================================================================================
+    Arguments:
+        + root: root node of the subtree
+        + level: level of root
+        + margin: how many nodes at the left of root (excluding nodes in the subtree of root)
+        + lefts: left child array
+        + rights: right child array
+        + level_cols: level_cols array
+    Outputs:
+        + num_node: number of nodes in the subtree
+    """
     num_node = 1
     root_col = margin + 1
 
