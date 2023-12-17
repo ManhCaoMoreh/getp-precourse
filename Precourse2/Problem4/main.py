@@ -1,7 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import cv2
-import pickle
 
 
 def load_image(file_path):
