@@ -89,8 +89,8 @@ if __name__ == "__main__":
 
     plt.show()
 
-    """
+    """ 
     =================================================================================================
     Save and submit a portion of the processed 32 images. 
-    You are free to choose any number of images (recommend 4~8)."
+    You are free to choose any number of images (recommend 4~8)"
     """
